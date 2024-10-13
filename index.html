@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renu Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #a29bfe; /* Background color for the whole page */
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+        header {
+            background-image: url('https://img.freepik.com/free-vector/restaurant-mural-wallpaper_23-2148706001.jpg');
+            height: 400px;
+            color: white;
+            text-align: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .header-content {
+            position: absolute;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+        }
+        .header-text {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        .check-status, .book-table {
+            display: inline-block;
+            margin-top: 10px;
+            background-color: #ff5733; /* Highlight color */
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .check-status:hover, .book-table:hover {
+            background-color: #ff3d00; /* Darker on hover */
+            box-shadow: 0 0 20px rgba(255, 61, 0, 0.6);
+            animation: pulse 0.5s infinite alternate;
+        }
+        @keyframes pulse {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        .restaurant-title {
+            position: absolute;
+            top: 40px;
+            left: 130px;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .nav-buttons a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        .rotate-image {
+            width: 300px;
+            animation: rotate 5s linear infinite;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .detail-box {
+            background: white; /* White foreground for detail boxes */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            opacity: 0; /* Start hidden for animation */
+            transform: translateY(20px); /* Start slightly below */
+            animation: fadeIn 0.5s forwards; /* Fade in animation */
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .detail-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .detail-title {
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            text-align: center;
+        }
+        .detail-description {
+            padding: 15px;
+            text-align: center;
+        }
+        .special-offers {
+            background: white; /* White foreground for special offers */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+        .testimonials {
+            background: white; /* White foreground for testimonials */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+        .testimonial {
+            margin: 15px 0;
+            font-style: italic;
+        }
+        /* Booking Form Styles */
+        .booking-form {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            overflow-y: auto; /* Allow scrolling */
+            z-index: 10;
+            animation: fadeIn 0.5s; /* Apply fade-in effect */
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            max-height: 80vh; /* Set a maximum height for the form container */
+            margin: 50px auto; /* Adjust this value to lift the form */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            position: relative; /* Relative to position the close button */
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .form-group button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        .close-btn {
+            cursor: pointer;
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="https://img.freepik.com/premium-vector/restaurant-logo-with-spoon-fork-icon-modern-concept-lines_510136-228.jpg" alt="Renu Restaurant Logo">
+    </div>
+    <a href="index.html" class="restaurant-title">Renu Restaurant</a>
+    <div class="header-content">
+        <div class="header-text">Enjoy Your Delicious Meal</div>
+        <a href="#" class="book-table" onclick="toggleBookingForm()">Book Table</a>
+    </div>
+    <img src="food-removebg-preview.png" alt="Food" class="rotate-image">
+    <div class="nav-buttons">
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contactus.html">Contact Us</a>
+        <a href="checkstatus.html">Check Status</a>
+        <a href="#" class="check-status" onclick="toggleBookingForm()">Book Table</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="detail-box">
+        <img src="https://slidechef.net/wp-content/uploads/2023/09/restaurant-business-story.jpg" alt="Detail 1" class="detail-image">
+        <div class="detail-title">Our Story</div>
+        <div class="detail-description">At Renu Restaurant, we bring you the finest dining experience with the freshest ingredients.</div>
+    </div>
+    <div class="detail-box">
+        <img src="https://img.freepik.com/premium-photo/restaurant-menu-design_1112329-168496.jpg" alt="Detail 2" class="detail-image">
+        <div class="detail-title">Our Menu</div>
+        <div class="detail-description">Explore a wide variety of dishes, from traditional recipes to modern culinary creations.</div>
+    </div>
+    <div class="detail-box">
+        <img src="https://thumbs.dreamstime.com/b/young-woman-taking-reservation-phone-restaurant-women-85212768.jpg" alt="Detail 3" class="detail-image">
+        <div class="detail-title">Reservations</div>
+        <div class="detail-description">Join us for a meal! Reserve your table online for a seamless dining experience.</div>
+    </div>
+    <div class="detail-box">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCSt8qdi-lv9eXd064NM3AOwZBrVn0C9xxVg&s" alt="Detail 4" class="detail-image">
+        <div class="detail-title">Catering Services</div>
+        <div class="detail-description">We offer catering for events and parties, providing delicious food tailored to your needs.</div>
+    </div>
+</div>
+
+<div class="special-offers">
+    <h2>Special Offers</h2>
+    <p>Join us for our weekly special: 20% off all pasta dishes on Tuesdays!</p>
+    <p>Happy Hour every Friday from 4 PM to 6 PM – Enjoy 50% off on selected drinks.</p>
+</div>
+
+<div class="testimonials">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonial">"Absolutely fantastic! The food was exquisite, and the service was outstanding!" - Sarah L.</div>
+    <div class="testimonial">"A hidden gem! I can't recommend Renu Restaurant enough!" - John D.</div>
+    <div class="testimonial">"Every dish was a masterpiece. I will definitely be back!" - Emily R.</div>
+</div>
+
+<!-- Booking Form -->
+<div class="booking-form" id="bookingForm">
+    <div class="form-container">
+        <span class="close-btn" onclick="toggleBookingForm()">X</span>
+        <h2>Book a Table</h2>
+        <form id="tableBookingForm">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="adults">Number of Adults</label>
+                <input type="number" id="adults" required>
+            </div>
+            <div class="form-group">
+                <label for="children">Number of Children</label>
+                <input type="number" id="children" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Time</label>
+                <input type="time" id="time" required>
+            </div>
+            <div class="form-group">
+                <label for="current-time">Current Time</label>
+                <input type="text" id="current-time" value="" readonly>
+            </div>
+            <div class="form-group">
+                <label for="table-number">Table Number</label>
+                <select id="table-number" required>
+                    <option value="">Select Table</option>
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="A3">A3</option>
+                    <option value="B1">B1</option>
+                    <option value="B2">B2</option>
+                    <option value="B3">B3</option>
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C3">C3</option>
+                    <option value="C4">C4</option>
+                    <option value="C5">C5</option>
+                    <option value="C6">C6</option>
+                    <option value="C7">C7</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="special-requests">Special Requests</label>
+                <textarea id="special-requests" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Submit Booking</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleBookingForm() {
+        const form = document.getElementById('bookingForm');
+        form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Set the current time in the readonly field
+    document.addEventListener('DOMContentLoaded', function() {
+        const now = new Date();
+        const formattedTime = now.toTimeString().split(' ')[0]; // Get time in HH:MM:SS format
+        document.getElementById('current-time').value = formattedTime;
+    });
+
+    document.getElementById('tableBookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const randomNumber = Math.floor(Math.random() * 10000); // Random number between 0 and 9999
+        const bookingData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            adults: document.getElementById('adults').value,
+            children: document.getElementById('children').value,
+            date: document.getElementById('date').value,
+            time: document.getElementById('time').value,
+            currentTime: document.getElementById('current-time').value,
+            tableNumber: document.getElementById('table-number').value,
+            specialRequests: document.getElementById('special-requests').value,
+        };
+        
+        // Store booking data in local storage
+        localStorage.setItem('booking_' + randomNumber, JSON.stringify(bookingData));
+
+        alert('Booking submitted successfully! Your confirmation number is: ' + randomNumber);
+        toggleBookingForm(); // Hide form after submission
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Renu Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/free-vector/restaurant-mural-wallpaper_23-2148706001.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            overflow-x: hidden;
+        }
+        header {
+            height: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .header-content {
+            position: absolute;
+            bottom: 80px;
+            left: 20px;
+            right: 20px;
+        }
+        .header-text {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .nav-buttons a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        .contact-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .contact-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .contact-description {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .map {
+            width: 100%;
+            height: 400px; /* Increased height for the map */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            transition: transform 0.3s;
+        }
+        .form-group:hover {
+            transform: translateY(-2px);
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: black; /* Set label color to black */
+            font-size: 18px; /* Increased font size */
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border 0.3s, background-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border: 1px solid #28a745;
+            outline: none;
+            background-color: white;
+        }
+        .form-group button {
+            background-color: #28a745;
+            color: rgb(14, 13, 13);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        .restaurant-title {
+            position: absolute;
+            top: 40px;
+            left: 130px;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        textarea {
+            color: black; /* Set text color for message area to black */
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 16px; /* Increased font size for footer */
+            color: #fffdfd;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="https://img.freepik.com/premium-vector/restaurant-logo-with-spoon-fork-icon-modern-concept-lines_510136-228.jpg" alt="Renu Restaurant Logo">
+    </div>
+    <a href="index.html" class="restaurant-title">Renu Restaurant</a>
+    <div class="header-content">
+        <div class="header-text">Contact Us</div>
+    </div>
+    <div class="nav-buttons">
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contactus.html">Contact Us</a>
+        <a href="checkstatus.html">Check Status</a>
+    </div>
+</header>
+
+<div class="contact-container">
+    <h2 class="contact-title">Get in Touch</h2>
+    <p class="contact-description">
+        We would love to hear from you! Whether you have a question about our menu, want to make a reservation, or have feedback to share, feel free to reach out.
+    </p>
+
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509051!2d144.95373531531856!3d-37.81627997975129!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f18f0db%3A0x5045675218ceed30!2sRenu%20Restaurant!5e0!3m2!1sen!2sus!4v1614769383155!5m2!1sen!2sus" 
+                style="border:0; width: 100%; height: 100%;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <form class="contact-form">
+        <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+            <button type="submit">Send Message</button>
+        </div>
+    </form>
+</div>
+
+<div class="footer">
+    <p>Join us for a delightful culinary experience at Renu Restaurant, where we serve a variety of exquisite dishes made from fresh ingredients. Our friendly staff is dedicated to providing you with the best dining experience possible.</p>
+    <p>Address: 123 Flavor Street, Food City, State, 12345</p>
+    <p>Phone: (123) 456-7890</p>
+</div>
+
+<script>
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        alert('Message sent successfully!'); // Simple alert on form submission
+        this.reset(); // Reset the form fields
+    });
+</script>
+
+</body>
+</html>

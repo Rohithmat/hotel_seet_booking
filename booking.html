@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Records</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #95afc0;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #007bff;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+            height: 100vh; /* Full height */
+            position: fixed; /* Fixed sidebar */
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            padding: 10px;
+            text-decoration: none;
+            margin: 10px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 250px; /* Adjust for fixed sidebar */
+            padding-left: 30px; /* Additional padding to separate from sidebar */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .table-container, .chart-container {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            flex-grow: 1; /* Allow containers to grow */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            transition: background-color 0.3s;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #30336b;
+            width: 100%;
+            position: relative; /* Ensure footer stays at bottom */
+            bottom: 0;
+            left: 0;
+        }
+
+        .footer-text {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+    <a href="user.html"><i class="fas fa-users"></i> User</a>
+    <a href="booking.html"><i class="fas fa-calendar-check"></i> Booking</a>
+    <a href="adminprofile.html"><i class="fas fa-user"></i> Admin Profile</a>
+</div>
+
+<div class="content">
+    <header>
+        <h1>Confirmed Booking Records</h1>
+    </header>
+
+    <div class="table-container">
+        <h2>Confirmed Booking Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking Code</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone No</th>
+                    <th>Booking Date</th>
+                    <th>Booking Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="bookingTableBody">
+                <!-- Confirmed bookings will be injected here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="chart-container">
+        <h2>Monthly Booking Survey</h2>
+        <canvas id="monthlySurveyChart" width="400" height="200"></canvas>
+    </div>
+
+    <footer>
+        <p class="footer-text">© 2024 Renu Restaurant - All Rights Reserved</p>
+    </footer>
+</div>
+
+<script>
+    // Load confirmed bookings from localStorage
+    function loadConfirmedBookings() {
+        const tableBody = document.getElementById('bookingTableBody');
+        tableBody.innerHTML = ''; // Clear previous entries
+
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+            const key = localStorage.key(i);
+            if (key.startsWith('booking_')) {
+                const booking = JSON.parse(localStorage.getItem(key));
+                if (booking.status === 'Confirmed') {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${key.replace('booking_', '')}</td>
+                        <td>${booking.name}</td>
+                        <td>${booking.email}</td>
+                        <td>${booking.phone}</td>
+                        <td>${booking.date}</td>
+                        <td>${booking.time}</td>
+                        <td>${booking.status}</td>
+                    `;
+                    tableBody.appendChild(row);
+                }
+            }
+        }
+    }
+
+    // Create the monthly survey chart
+    function createMonthlySurveyChart() {
+        const ctx = document.getElementById('monthlySurveyChart').getContext('2d');
+        const monthlySurveyChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [
+                    {
+                        label: 'Bookings',
+                        data: [30, 40, 45, 60, 70, 90, 120],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Cancelled Orders',
+                        data: [5, 10, 15, 10, 5, 20, 15],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Orders'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Months'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        labels: {
+                            color: '#fff' // Color of the legend text
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    window.onload = function() {
+        loadConfirmedBookings(); // Load confirmed bookings on page load
+        createMonthlySurveyChart(); // Create the monthly survey chart
+    };
+</script>
+
+</body>
+</html>

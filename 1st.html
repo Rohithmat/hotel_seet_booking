@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/636/794/321/cafe-with-a-view-wallpaper-preview.jpg');
+            background-size: cover;
+            position: relative;
+        }
+
+        .elevated-box {
+            background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
+            border-radius: 10px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: scaleIn 0.5s forwards;
+            transform: scale(0.8);
+            opacity: 0;
+            width: 450px; /* Increased width */
+            position: relative; /* For foreground positioning */
+        }
+
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #333; /* Darker text color */
+            margin-bottom: 20px;
+        }
+
+        .button {
+            background-color: #ff5733; /* Button color */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px; /* Increased font size */
+            border-radius: 25px; /* Rounded shape */
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .button:hover {
+            background-color: #ff3d00; /* Darker color on hover */
+            transform: scale(1.05);
+        }
+
+        .form-container {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            transition: opacity 0.3s;
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        .form-container.show {
+            display: block;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #ff5733; /* Highlight on focus */
+            outline: none;
+        }
+
+        .form-group button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .form-group button:hover {
+            background-color: #218838;
+        }
+
+        /* Foreground GIF for the box */
+        .elevated-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://img1.picmix.com/output/stamp/normal/1/0/1/9/2559101_ddeda.gif');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2; /* Increased transparency for overlay effect */
+            border-radius: 10px; /* Match the box's border radius */
+            z-index: -1; /* Place behind the content */
+        }
+    </style>
+</head>
+<body>
+
+<div class="elevated-box">
+    <h1>Welcome to Renu Restaurant</h1>
+    <a href="#" class="button" id="loginBtn">Login</a>
+    <a href="#" class="button" id="signInBtn">Sign In</a>
+
+    <div class="form-container" id="loginForm">
+        <h2 style="color: #333;">Login</h2>
+        <div class="form-group">
+            <input type="text" id="username" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <button id="submitLogin">Submit</button>
+        </div>
+        <p style="color: #333;">Don't have an account? <a href="#" id="switchToSignIn" style="color: #ff5733;">Sign In</a></p>
+    </div>
+
+    <div class="form-container" id="signInForm">
+        <h2 style="color: #333;">Sign In</h2>
+        <div class="form-group">
+            <input type="text" placeholder="Create Username" required>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Create Password" required>
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Confirm Password" required>
+        </div>
+        <div class="form-group">
+            <button id="submitSignIn">Create Account</button>
+        </div>
+        <p style="color: #333;">Already have an account? <a href="#" id="switchToLogin" style="color: #ff5733;">Login</a></p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginBtn').onclick = function() {
+        document.getElementById('loginForm').classList.add('show');
+        document.getElementById('signInForm').classList.remove('show');
+    };
+
+    document.getElementById('signInBtn').onclick = function() {
+        document.getElementById('signInForm').classList.add('show');
+        document.getElementById('loginForm').classList.remove('show');
+    };
+
+    document.getElementById('switchToSignIn').onclick = function() {
+        document.getElementById('loginForm').classList.remove('show');
+        document.getElementById('signInForm').classList.add('show');
+    };
+
+    document.getElementById('switchToLogin').onclick = function() {
+        document.getElementById('signInForm').classList.remove('show');
+        document.getElementById('loginForm').classList.add('show');
+    };
+
+    document.getElementById('submitLogin').onclick = function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === 'renu' && password === 'renu') {
+            window.location.href = 'admin.html'; // Redirect to admin page
+        } else {
+            window.location.href = 'index.html'; // Redirect to index page
+        }
+    };
+
+    document.getElementById('submitSignIn').onclick = function() {
+        window.location.href = 'index.html'; // Redirect to index page
+    };
+</script>
+
+</body>
+</html>

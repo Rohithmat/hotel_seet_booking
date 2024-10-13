@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Booking Status - Renu Restaurant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #a29bfe; /* Matching background color */
+            color: #333; /* Dark text color */
+            text-align: center;
+        }
+        header {
+            background-image: url('https://img.freepik.com/free-vector/restaurant-mural-wallpaper_23-2148706001.jpg');
+            height: 400px;
+            color: white;
+            text-align: center;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        .restaurant-title {
+            position: absolute;
+            top: 40px;
+            left: 130px;
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .nav-buttons a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        .status-title {
+            position: absolute;
+            bottom: 20px; /* Positioning it lower */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px; /* Size of the title */
+            font-weight: bold;
+            color: white; /* Text color */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Shadow for depth */
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .status-check {
+            background: #ffffff; /* White background for the form */
+            color: #333; /* Dark text */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .form-group button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #f9f9f9; /* Light gray background */
+            border-radius: 8px;
+            overflow: hidden; /* Round corners */
+            animation: slideIn 0.5s;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .result-table th, .result-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            transition: background-color 0.3s; /* Transition effect */
+        }
+        .result-table th {
+            background-color: #4CAF50; /* Green header */
+            color: white;
+            font-weight: bold;
+        }
+        .result-table tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light gray for even rows */
+        }
+        .result-table tr:hover {
+            background-color: #d1e7dd; /* Highlight on hover */
+        }
+        .result-table td {
+            padding: 15px; /* Increased padding for better spacing */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="https://img.freepik.com/premium-vector/restaurant-logo-with-spoon-fork-icon-modern-concept-lines_510136-228.jpg" alt="Renu Restaurant Logo">
+    </div>
+    <a href="index.html" class="restaurant-title">Renu Restaurant</a>
+    <div class="status-title">Check Status</div>
+    <div class="nav-buttons">
+        <a href="index.html">Home</a>
+        <a href="aboutus.html">About Us</a>
+        <a href="contactus.html">Contact Us</a>
+        <a href="checkstatus.html">Check Status</a>
+        <a href="#" class="book-table" onclick="toggleBookingForm()">Book Table</a>
+    </div>
+</header>
+
+<div class="container">
+    <h2>Check Your Booking Status</h2>
+    <div class="status-check">
+        <form id="statusCheckForm">
+            <div class="form-group">
+                <label for="booking-code">Enter Your Booking Code</label>
+                <input type="text" id="booking-code" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Check Status</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="resultContainer" style="display: none;">
+        <h3>Booking Details</h3>
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th>Booking Number</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone No</th>
+                    <th>Booking Date</th>
+                    <th>Booking Time</th>
+                    <th>No. of Adults</th>
+                    <th>No. of Kids</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.getElementById('statusCheckForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const code = document.getElementById('booking-code').value;
+        const booking = localStorage.getItem('booking_' + code);
+        
+        if (booking) {
+            const bookingDetails = JSON.parse(booking);
+            document.getElementById('resultBody').innerHTML = `
+                <tr>
+                    <td>${code}</td>
+                    <td>${bookingDetails.name}</td>
+                    <td>${bookingDetails.email}</td>
+                    <td>${bookingDetails.phone}</td>
+                    <td>${bookingDetails.date}</td>
+                    <td>${bookingDetails.time}</td>
+                    <td>${bookingDetails.adults}</td>
+                    <td>${bookingDetails.kids}</td>
+                    <td>${bookingDetails.status}</td> <!-- Reflects updated status -->
+                </tr>
+            `;
+            document.getElementById('resultContainer').style.display = 'block';
+        } else {
+            alert('No booking found with that code.');
+            document.getElementById('resultContainer').style.display = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>

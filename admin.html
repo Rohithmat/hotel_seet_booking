@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #bdc3c7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 50px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header-admin {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-right: 30px;
+        }
+
+        .header-admin a {
+            background-color: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-admin a:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #34495e;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 70px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar a {
+            color: #ecf0f1;
+            padding: 15px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .sidebar a:hover {
+            background-color: #2c3e50;
+        }
+
+        .content {
+            margin-left: 260px;
+            padding: 20px;
+            padding-top: 80px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 18%;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            padding: 20px;
+            display: inline-block;
+            color: white;
+        }
+
+        .all-bookings { background-color: #3498db; }
+        .today-bookings { background-color: #2ecc71; }
+        .yesterday-bookings { background-color: #f39c12; }
+        .last-week-bookings { background-color: #e67e22; }
+        .accepted-bookings { background-color: #9b59b6; }
+        .cancel-bookings { background-color: #e74c3c; }
+
+        table {
+            width: 100%;
+            max-width: 800px; /* Adjusted to fit better on the screen */
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #bdc3c7;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .confirm, .cancel, .remove {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .confirm {
+            background-color: #28a745;
+        }
+
+        .cancel {
+            background-color: #dc3545;
+        }
+
+        .remove {
+            background-color: #e74c3c; /* Red for remove button */
+        }
+
+        .confirm:hover {
+            background-color: #218838;
+        }
+
+        .cancel:hover {
+            background-color: #c82333;
+        }
+
+        .remove:hover {
+            background-color: #c82333;
+        }
+
+        .more-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+        }
+
+        .more-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html"><img src="https://img.freepik.com/premium-vector/restaurant-logo-with-spoon-fork-icon-modern-concept-lines_510136-228.jpg" alt="Renu Restaurant Logo"></a>
+            <h1>Renu Restaurant</h1>
+        </div>
+        <div class="header-admin">
+            <a href="adminprofile.html"><i class="fas fa-user"></i> Admin Profile</a>
+        </div>
+    </header>
+    
+    <div class="sidebar">
+        <a href="admin.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="user.html"><i class="fas fa-users"></i> User</a>
+        <a href="booking.html"><i class="fas fa-calendar-check"></i> Booking</a>
+       
+    </div>
+    
+    <div class="content">
+        <h2>Welcome to the Admin Dashboard</h2>
+        <div class="container">
+            <div class="card all-bookings">
+                <i class="fas fa-list icon"></i>
+                <p>All Bookings</p>
+                <h3 id="totalBookings">20</h3> <!-- Start from 20 -->
+            </div>
+            <div class="card today-bookings">
+                <i class="fas fa-calendar-day icon"></i>
+                <p>Today Bookings</p>
+                <h3 id="todayBookings">0</h3>
+            </div>
+            <div class="card yesterday-bookings">
+                <i class="fas fa-calendar-alt icon"></i>
+                <p>Yesterday Bookings</p>
+                <h3 id="yesterdayBookings">5</h3> <!-- Random constant number -->
+            </div>
+            <div class="card last-week-bookings">
+                <i class="fas fa-calendar-week icon"></i>
+                <p>Last Week Bookings</p>
+                <h3 id="lastWeekBookings">7</h3> <!-- Random constant number -->
+            </div>
+            <div class="card accepted-bookings">
+                <i class="fas fa-check-circle icon"></i>
+                <p>Accepted Bookings</p>
+                <h3 id="acceptedBookings">0</h3>
+            </div>
+            <div class="card cancel-bookings">
+                <i class="fas fa-times-circle icon"></i>
+                <p>Cancel Bookings</p>
+                <h3 id="cancelBookings">0</h3>
+            </div>
+        </div>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Booking Code</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone No</th>
+                    <th>Booking Date</th>
+                    <th>Booking Time</th>
+                    <th>Booked Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="bookingTableBody">
+                <!-- Booking data will be injected here -->
+            </tbody>
+        </table>
+        <div id="emptyMessage" class="empty-message" style="display: none;">No bookings available.</div>
+        
+        <button id="toggleButton" class="more-button">More</button>
+    </div>
+    
+    <script>
+        let allBookings = [];
+        let visibleCount = 5; // Default number of visible bookings
+        let currentCount = visibleCount;
+
+        // Initialize booking counts
+        let acceptedBookings = 0; 
+        let canceledBookings = 0; 
+        let todayBookings = 0; // Count for today's bookings
+
+        function loadBookings() {
+            const tableBody = document.getElementById('bookingTableBody');
+            const emptyMessage = document.getElementById('emptyMessage');
+
+            allBookings = []; // Reset bookings array
+            tableBody.innerHTML = ''; // Clear previous entries
+
+            acceptedBookings = 0; // Reset counts
+            canceledBookings = 0;
+            todayBookings = 0; // Reset today's bookings
+
+            for (let i = localStorage.length - 1; i >= 0; i--) {
+                const key = localStorage.key(i);
+                if (key.startsWith('booking_')) {
+                    const booking = JSON.parse(localStorage.getItem(key));
+                    booking.currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+                    allBookings.push({ key, ...booking });
+
+                    // Update counts based on status
+                    if (booking.status === 'Confirmed') {
+                        acceptedBookings++;
+                        // Check if the booking date is today
+                        const bookingDate = new Date(booking.date);
+                        const today = new Date();
+                        if (bookingDate.toDateString() === today.toDateString()) {
+                            todayBookings++;
+                        }
+                    } else if (booking.status === 'Cancelled') {
+                        canceledBookings++;
+                    }
+                }
+            }
+
+            // Update the total bookings count based on the number of records
+            document.getElementById('totalBookings').innerText = allBookings.length; // Update total bookings directly
+            document.getElementById('todayBookings').innerText = todayBookings; // Update today's bookings
+            document.getElementById('acceptedBookings').innerText = acceptedBookings; // Update accepted bookings
+            document.getElementById('cancelBookings').innerText = canceledBookings; // Update canceled bookings
+            
+            emptyMessage.style.display = allBookings.length === 0 ? 'block' : 'none';
+            allBookings.sort((a, b) => new Date(b.date) - new Date(a.date));
+            displayBookings(currentCount);
+        }
+
+        function displayBookings(count) {
+            const tableBody = document.getElementById('bookingTableBody');
+            tableBody.innerHTML = ''; // Clear previous entries
+
+            const bookingsToShow = allBookings.slice(0, count);
+            bookingsToShow.forEach(({ key, name, email, phone, date, time, currentTime, status }) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${key.replace('booking_', '')}</td>
+                    <td>${name}</td>
+                    <td>${email}</td>
+                    <td>${phone}</td>
+                    <td>${date}</td>
+                    <td>${time}</td>
+                    <td>${currentTime}</td>
+                    <td class="status" id="status_${key}">${status || 'Pending'}</td>
+                    <td>
+                        <div class="button-group">
+                            <button class="confirm" onclick="updateStatus('${key}', 'Confirmed')">Confirm</button>
+                            <button class="cancel" onclick="updateStatus('${key}', 'Cancelled')">Cancel</button>
+                            <button class="remove" onclick="removeBooking('${key}')">X</button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateStatus(key, status) {
+            const booking = JSON.parse(localStorage.getItem(key));
+            if (booking) {
+                const previousStatus = booking.status || 'Pending';
+                booking.status = status; // Update status
+                localStorage.setItem(key, JSON.stringify(booking)); // Save updated booking
+                document.getElementById(`status_${key}`).innerText = status; // Update status in the table
+
+                // Update counts based on previous and new status
+                if (previousStatus === 'Confirmed') acceptedBookings--;
+                if (previousStatus === 'Cancelled') canceledBookings--;
+                if (status === 'Confirmed') {
+                    acceptedBookings++;
+                    // Check if booking is confirmed today
+                    const bookingDate = new Date(booking.date);
+                    const today = new Date();
+                    if (bookingDate.toDateString() === today.toDateString()) {
+                        todayBookings++;
+                    }
+                }
+                if (status === 'Cancelled') {
+                    canceledBookings++;
+                    // Check if booking was confirmed today and is now canceled
+                    const bookingDate = new Date(booking.date);
+                    const today = new Date();
+                    if (previousStatus === 'Confirmed' && bookingDate.toDateString() === today.toDateString()) {
+                        todayBookings--;
+                    }
+                }
+            }
+            
+            // Update the total bookings count based on the number of records
+            document.getElementById('totalBookings').innerText = allBookings.length; // Total bookings based on the array length
+            document.getElementById('todayBookings').innerText = todayBookings; // Update today's bookings
+            document.getElementById('acceptedBookings').innerText = acceptedBookings; // Update accepted bookings
+            document.getElementById('cancelBookings').innerText = canceledBookings; // Update canceled bookings
+        }
+
+        function removeBooking(key) {
+            localStorage.removeItem(key); // Remove booking from local storage
+            loadBookings(); // Reload bookings to update the table
+        }
+
+        document.getElementById('toggleButton').addEventListener('click', () => {
+            currentCount = currentCount === visibleCount ? allBookings.length : visibleCount; // Toggle between all and limited
+            document.getElementById('toggleButton').innerText = currentCount === allBookings.length ? 'Less' : 'More';
+            displayBookings(currentCount);
+        });
+
+        window.onload = loadBookings; // Load bookings on page load
+    </script>
+</body>
+
+    </html>
+    
